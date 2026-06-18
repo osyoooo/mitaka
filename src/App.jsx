@@ -43,12 +43,11 @@ const gmap = (name, address) => `https://www.google.com/maps/search/?api=1&query
 const mapBtnStyle = { background: c.sageBg, color: c.ink, border: `1px solid ${c.sage}`, fontWeight: 700 };
 
 const navItems = [
+  { id: "map", label: "全体MAP" },
   { id: "same-building", label: "同じ建物" },
   { id: "area-mitaka", label: "三鷹駅周辺" },
   { id: "area-inokashira", label: "井の頭公園" },
-  { id: "area-kitaguchi", label: "北口" },
   { id: "route", label: "さんぽルート" },
-  { id: "map", label: "全体MAP" },
 ];
 
 const Illu = ({ cat, col, s = 30 }) => {
@@ -223,17 +222,6 @@ const shopsRaw = [
     hours: "10:00〜18:00目安（入場時間指定制）", holiday: "火曜休館中心。長期・臨時休館あり", budget: "大人・大学生 1,000円目安",
     officialUrl: "https://www.ghibli-museum.jp/", instagramUrl: "",
     note: "入場には日時指定チケットが必要。開館日・入場時間・休館日は変更の場合あり。来館前に公式サイトを確認。" },
-
-  { name: "DOPPO 自家焙煎珈琲豆", pinType: "お茶・カフェ", genre: "自家焙煎珈琲豆", group: "kitaguchi", distance: "三鷹駅 北口側",
-    comment: "三鷹駅北口側の自家焙煎珈琲豆店。北口側に寄るなら入れたいコーヒー。",
-    tags: ["コーヒー", "自家焙煎", "北口"], address: "東京都武蔵野市中町1-10-7 武蔵野Kビル1F",
-    hours: "11:00〜19:00", holiday: "火曜・水曜", budget: "〜1,000円目安",
-    officialUrl: "https://www.doppo-coffee.com/", instagramUrl: "", note: "SCOOLからは駅を挟む北口寄りの動線。" },
-  { name: "自家焙煎珈琲 andante", pinType: "お茶・カフェ", genre: "自家焙煎珈琲・喫茶", group: "kitaguchi", distance: "三鷹駅 北口から少し歩く",
-    comment: "北口から少し歩く、落ち着いた自家焙煎珈琲店。静かにコーヒーを飲みたい人向け。",
-    tags: ["コーヒー", "自家焙煎", "しずか"], address: "東京都武蔵野市西久保2-18-3",
-    hours: "8:00〜20:00 ※火曜18:00閉店、木曜11:00開店", holiday: "定休日なしの案内あり", budget: "〜1,000円目安",
-    officialUrl: "https://andante3.com/", instagramUrl: "", note: "北口側の寄り道候補として。" },
 ];
 
 const shops = shopsRaw.map((s, i) => ({ ...s, id: "shop" + i, cat: pinToCat[s.pinType] }));
@@ -241,7 +229,6 @@ const shops = shopsRaw.map((s, i) => ({ ...s, id: "shop" + i, cat: pinToCat[s.pi
 const groups = [
   { key: "mitaka", en: "Around Mitaka", jp: "三鷹駅・SCOOL周辺" },
   { key: "inokashira", en: "Inokashira Park", jp: "井の頭公園方面" },
-  { key: "kitaguchi", en: "Mitaka North", jp: "三鷹駅 北口側" },
 ];
 
 const route = {
@@ -302,7 +289,7 @@ function StickyNav() {
   const go = (id) => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
   return (
     <nav style={{ position: "sticky", top: 0, zIndex: 30, margin: "0 -20px", padding: "9px 0", background: "rgba(247,241,230,.94)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", borderBottom: `1px solid ${c.line}`, maxWidth: "100vw" }}>
-      <div className="hide-scroll" style={{ display: "flex", gap: 7, overflowX: "auto", WebkitOverflowScrolling: "touch", padding: "0 16px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 7, padding: "0 16px" }}>
         {navItems.map((it) => {
           const on = active === it.id;
           return (
@@ -315,7 +302,6 @@ function StickyNav() {
           );
         })}
       </div>
-      <div style={{ position: "absolute", top: 1, right: 0, bottom: 1, width: 26, pointerEvents: "none", background: "linear-gradient(to right, rgba(247,241,230,0), rgba(247,241,230,.94))" }} />
     </nav>
   );
 }
@@ -579,6 +565,37 @@ export default function App() {
           </div>
         </Reveal>
 
+        <section id="map" style={{ ...anchor, padding: "0 0 64px" }}>
+          <Reveal><Label en="Map" jp="MITAKA SCOOL MAP" /></Reveal>
+          <Reveal delay={0.05}>
+            <h2 style={{ fontFamily: serif, fontSize: "clamp(21px, 5.5vw, 27px)", fontWeight: 600, color: c.ink, letterSpacing: ".03em", marginBottom: 12 }}>正確な場所はGoogleマップで確認</h2>
+            <p style={{ fontFamily: sans, fontSize: 13.5, lineHeight: 1.95, color: c.inkSoft, marginBottom: 22 }}>三鷹SCOOLと、イベント前後に立ち寄りやすいおすすめ店だけをまとめた専用マップです。気になるピンをクリックして、場所や移動感を確認できます。</p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div style={{ background: c.paper, border: `1px solid ${c.line}`, borderRadius: 22, padding: 10, boxShadow: "0 26px 50px -34px rgba(58,53,46,.4)" }}>
+              <div className="flex items-center justify-between" style={{ padding: "3px 6px 10px" }}>
+                <span className="flex items-center gap-2" style={{ fontFamily: sans, fontSize: 11.5, color: c.inkSoft, letterSpacing: ".08em" }}><Pin color={c.gold} s={12} /> RECOMMEND MAP</span>
+                <span className="flex gap-1.5"><span style={{ width: 7, height: 7, borderRadius: 99, background: c.beige }} /><span style={{ width: 7, height: 7, borderRadius: 99, background: c.sageBg }} /><span style={{ width: 7, height: 7, borderRadius: 99, background: c.line }} /></span>
+              </div>
+              <div style={{ borderRadius: 14, overflow: "hidden" }}>
+                {isPlaceholder(googleMyMapsEmbedUrl) ? (
+                  <div style={{ height: 320, background: c.sageBg, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 24 }}>
+                    <div style={{ marginBottom: 14, animation: "floaty 4s ease-in-out infinite" }}><Pin color={c.sage} s={38} /></div>
+                    <p style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: c.ink }}>Google My Maps 埋め込みエリア</p>
+                  </div>
+                ) : enableInlineMapEmbed ? (
+                  <iframe src={googleMyMapsEmbedUrl} width="100%" height="460" style={{ border: 0, display: "block" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="三鷹SCOOL 寄り道マップ" />
+                ) : (
+                  <MapPreviewCard />
+                )}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p style={{ fontFamily: sans, fontSize: 11.5, color: c.inkSoft, marginTop: 14, lineHeight: 1.7 }}>※ 地図をタップすると、Google My Maps（今回のレコメンド店だけを表示）が開きます。<br />※ 営業時間・定休日は変更される場合があるため、来店前に公式情報をご確認ください。</p>
+          </Reveal>
+        </section>
+
         <SameBuilding />
 
         <section style={{ padding: "0 0 56px" }}>
@@ -634,7 +651,7 @@ export default function App() {
             <h2 style={{ fontFamily: serif, fontSize: 16.5, fontWeight: 600, color: c.ink, marginBottom: 14 }}>ご利用にあたって</h2>
             {["掲載店舗は三鷹SCOOL周辺と井の頭公園方面のおすすめをまとめたものです。",
               "営業時間・定休日・メニューは変更される場合があります。来店前に各店の公式情報・SNSをご確認ください。",
-              "正確な位置・経路は、下のGoogleマップ（My Maps）でご確認ください。"].map((t, i) => (
+              "正確な位置・経路は、ページ上部の全体MAP（My Maps）でご確認ください。"].map((t, i) => (
               <div key={i} className="flex gap-2.5" style={{ marginBottom: 9 }}>
                 <span style={{ color: c.sage, fontWeight: 700 }}>—</span>
                 <p style={{ fontFamily: sans, fontSize: 12.5, lineHeight: 1.8, color: c.ink, margin: 0 }}>{t}</p>
@@ -642,37 +659,6 @@ export default function App() {
             ))}
           </section>
         </Reveal>
-
-        <section id="map" style={{ ...anchor, padding: "0 0 64px" }}>
-          <Reveal><Label en="Map" jp="MITAKA SCOOL MAP" /></Reveal>
-          <Reveal delay={0.05}>
-            <h2 style={{ fontFamily: serif, fontSize: "clamp(21px, 5.5vw, 27px)", fontWeight: 600, color: c.ink, letterSpacing: ".03em", marginBottom: 12 }}>正確な場所はGoogleマップで確認</h2>
-            <p style={{ fontFamily: sans, fontSize: 13.5, lineHeight: 1.95, color: c.inkSoft, marginBottom: 22 }}>三鷹SCOOLと、イベント前後に立ち寄りやすいおすすめ店だけをまとめた専用マップです。気になるピンをクリックして、場所や移動感を確認できます。</p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div style={{ background: c.paper, border: `1px solid ${c.line}`, borderRadius: 22, padding: 10, boxShadow: "0 26px 50px -34px rgba(58,53,46,.4)" }}>
-              <div className="flex items-center justify-between" style={{ padding: "3px 6px 10px" }}>
-                <span className="flex items-center gap-2" style={{ fontFamily: sans, fontSize: 11.5, color: c.inkSoft, letterSpacing: ".08em" }}><Pin color={c.gold} s={12} /> RECOMMEND MAP</span>
-                <span className="flex gap-1.5"><span style={{ width: 7, height: 7, borderRadius: 99, background: c.beige }} /><span style={{ width: 7, height: 7, borderRadius: 99, background: c.sageBg }} /><span style={{ width: 7, height: 7, borderRadius: 99, background: c.line }} /></span>
-              </div>
-              <div style={{ borderRadius: 14, overflow: "hidden" }}>
-                {isPlaceholder(googleMyMapsEmbedUrl) ? (
-                  <div style={{ height: 320, background: c.sageBg, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 24 }}>
-                    <div style={{ marginBottom: 14, animation: "floaty 4s ease-in-out infinite" }}><Pin color={c.sage} s={38} /></div>
-                    <p style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: c.ink }}>Google My Maps 埋め込みエリア</p>
-                  </div>
-                ) : enableInlineMapEmbed ? (
-                  <iframe src={googleMyMapsEmbedUrl} width="100%" height="460" style={{ border: 0, display: "block" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="三鷹SCOOL 寄り道マップ" />
-                ) : (
-                  <MapPreviewCard />
-                )}
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p style={{ fontFamily: sans, fontSize: 11.5, color: c.inkSoft, marginTop: 14, lineHeight: 1.7 }}>※ 地図をタップすると、Google My Maps（今回のレコメンド店だけを表示）が開きます。<br />※ 営業時間・定休日は変更される場合があるため、来店前に公式情報をご確認ください。</p>
-          </Reveal>
-        </section>
 
         <footer style={{ textAlign: "center", padding: "20px 0 52px", borderTop: `1px solid ${c.line}` }}>
           <p style={{ fontFamily: latin, fontStyle: "italic", fontSize: 17, color: c.ink, marginBottom: 5 }}>Mitaka SCOOL</p>
